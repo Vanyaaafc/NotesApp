@@ -31,52 +31,55 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.indigo,
-              Colors.white,
-            ],
-          ),
-        ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.5),
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthLoadedState) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (BuildContext context) {
+                return const MainScreen();
+              }),
+            );
+          }
+          if (state is AuthErrorState) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.error)));
+          }
+        },
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is ShowSignUpScreenState) {
+              _loginController.clear();
+              _passwordController.clear();
+              return const SignUpScreen();
+            }
+            return Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.indigo,
+                    Colors.white,
+                  ],
+                ),
+              ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.white.withOpacity(0.1)),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 54, horizontal: 16),
-                  child: BlocListener<AuthBloc, AuthState>(
-                    listener: (context, state) {
-                      if (state is AuthErrorState) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text(state.error)));
-                      }
-                      if (state is AuthLoadedState) {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return const MainScreen();
-                          }),
-                        );
-                      }
-                    },
-                    child: BlocBuilder<AuthBloc, AuthState>(
-                      builder: (context, state) {
-                        if (state is ShowSignUpScreenState) {
-                          return const SignUpScreen();
-                        }
-                        return Column(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(16),
+                          border:
+                              Border.all(color: Colors.white.withOpacity(0.1)),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 54, horizontal: 16),
+                        child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -99,16 +102,20 @@ class _AuthScreenState extends State<AuthScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Text('Do not have an account?',
-                                        style: TextStyle(fontSize: 16)),
+                                    const Text(
+                                      'Do not have an account?',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
                                     TextButton(
                                       onPressed: () {
                                         context
                                             .read<AuthBloc>()
                                             .add(ShowSignUpScreenEvent());
                                       },
-                                      child: const Text('Create account',
-                                          style: TextStyle(fontSize: 16)),
+                                      child: const Text(
+                                        'Create account',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -135,16 +142,16 @@ class _AuthScreenState extends State<AuthScreen> {
                                   ),
                                 ),
                               ],
-                            )
+                            ),
                           ],
-                        );
-                      },
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

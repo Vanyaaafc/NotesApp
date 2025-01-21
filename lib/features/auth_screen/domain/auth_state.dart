@@ -14,15 +14,7 @@ final class AuthErrorState extends AuthState {
   AuthErrorState({required this.error});
 }
 
-final class SignUpLoadingState extends AuthState {}
 
-final class SignUpLoadedState extends AuthState {}
-
-final class SignUpErrorState extends AuthState {
-  final String error;
-
-  SignUpErrorState({required this.error});
-}
 
 final class ShowSignUpScreenState extends AuthState {}
 

@@ -11,7 +11,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this._firebaseService, this._sharedPreferences) : super(AuthInitialState()) {
     on<AuthEvent>((event, emit) {});
     on<AuthInitialEvent>(_init);
-    on<RegisterEvent>(_onRegister);
     on<LoginEvent>(_onLogin);
     on<ShowSignUpScreenEvent>((event, emit) {
       emit(ShowSignUpScreenState());
@@ -32,23 +31,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   final FirebaseService _firebaseService;
   final SharedPreferences _sharedPreferences;
-  final FirebaseAuth auth = FirebaseAuth.instance;
 
-  Future<void> _onRegister(
-      RegisterEvent event, Emitter<AuthState> emit) async {
-    emit(SignUpLoadingState());
-    try {
-      await auth.createUserWithEmailAndPassword(
-        email: event.email,
-        password: event.password,
-      );
-      emit(SignUpLoadedState());
-    } on FirebaseAuthException catch (e) {
-      emit(SignUpErrorState(error: e.message ?? 'Error during registration'));
-    } catch (e) {
-      emit(SignUpErrorState(error: e.toString()));
-    }
-  }
 
   Future<void> _onLogin(LoginEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoadingState());

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/features/auth_screen/domain/auth_bloc.dart';
 import 'package:notes_app/features/auth_screen/presentation/auth_screen.dart';
+import 'package:notes_app/features/sign_up/domain/sign_up_bloc.dart';
 
 import 'di.dart';
 import 'firebase_options.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: g.get<AuthBloc>()..add(AuthInitialEvent())),
+        BlocProvider.value(value: g.get<SignUpBloc>()..add(SignUpInitialEvent()))
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
