@@ -13,7 +13,7 @@ Future<void> setup() async {
  g.registerSingleton<SharedPreferences>(sharedPreferences);
 
  g.registerSingleton<AuthBloc>(AuthBloc(g.get<FirebaseService>(), g.get<SharedPreferences>()));
- g.registerSingleton<SignUpBloc>(SignUpBloc(g.get<FirebaseService>()));
+ g.registerSingleton<SignUpBloc>(SignUpBloc());
 }
 
 Future<SharedPreferences> _getStorage() async =>
