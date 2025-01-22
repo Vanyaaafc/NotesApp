@@ -6,6 +6,7 @@ import 'package:notes_app/features/auth_screen/domain/auth_bloc.dart';
 import 'package:notes_app/features/auth_screen/presentation/auth_screen.dart';
 import 'package:notes_app/features/main_screen/presentation/main_screen.dart';
 import 'package:notes_app/features/sign_up/domain/sign_up_bloc.dart';
+import 'package:notes_app/shared/styles/gradient.dart';
 import 'package:notes_app/shared/widgets/buttons/continue_button.dart';
 import 'package:notes_app/shared/widgets/text/title_text.dart';
 import 'package:notes_app/shared/widgets/text_fields/main_text_field.dart';
@@ -60,17 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             _confirmPasswordController.clear();
             return const AuthScreen();
           }
-          return Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.indigo,
-                  Colors.white,
-                ],
-              ),
-            ),
+          return GradientBackground(
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(16),

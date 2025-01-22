@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/features/main_screen/presentation/main_screen.dart';
 import 'package:notes_app/features/sign_up/presentation/sign_up_screen.dart';
+import 'package:notes_app/shared/styles/gradient.dart';
 import 'package:notes_app/shared/widgets/buttons/continue_button.dart';
 import 'package:notes_app/shared/widgets/text/title_text.dart';
 import 'package:notes_app/shared/widgets/text_fields/main_text_field.dart';
@@ -52,17 +53,7 @@ class _AuthScreenState extends State<AuthScreen> {
               _passwordController.clear();
               return const SignUpScreen();
             }
-            return Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.indigo,
-                    Colors.white,
-                  ],
-                ),
-              ),
+            return GradientBackground(
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
