@@ -32,6 +32,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
+  bool _matchingPasswords() {
+    return _createPasswordController.text == _confirmPasswordController.text;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<SignUpBloc, SignUpState>(
@@ -130,13 +134,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               onPressed: state is SignUpLoadingState
                                   ? null
                                   : () {
-                                      context
-                                          .read<SignUpBloc>()
-                                          .add(RegisterEvent(
-                                            email: _createLoginController.text,
-                                            password:
-                                                _createPasswordController.text,
-                                          ));
+                                      if (!_matchingPasswords()) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                          content:
+                                              Text('Passwords do not match'),
+                                        ));
+                                        return;
+                                      }
+                                      context.read<SignUpBloc>().add(
+                                            RegisterEvent(
+                                              email:
+                                                  _createLoginController.text,
+                                              password:
+                                                  _createPasswordController
+                                                      .text,
+                                            ),
+                                          );
                                     },
                               text: state is SignUpLoadingState
                                   ? null
