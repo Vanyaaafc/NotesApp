@@ -1,11 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/features/main_screen/presentation/main_screen.dart';
 import 'package:notes_app/features/sign_up/presentation/sign_up_screen.dart';
-import 'package:notes_app/shared/styles/gradient.dart';
+import 'package:notes_app/shared/styles/colors.dart';
 import 'package:notes_app/shared/widgets/buttons/continue_button.dart';
+import 'package:notes_app/shared/widgets/text/base_text.dart';
 import 'package:notes_app/shared/widgets/text/title_text.dart';
 import 'package:notes_app/shared/widgets/text_fields/main_text_field.dart';
 
@@ -53,92 +52,87 @@ class _AuthScreenState extends State<AuthScreen> {
               _passwordController.clear();
               return const SignUpScreen();
             }
-            return GradientBackground(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(16),
-                          border:
-                              Border.all(color: Colors.white.withOpacity(0.1)),
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const TitleText(title: 'Let’s Login'),
+                    const SizedBox(height: 12),
+                    const BaseText(
+                        title: 'And notes your idea', color: Colors.black45),
+                    const SizedBox(height: 32),
+                    const BaseText(title: 'Email Address'),
+                    const SizedBox(height: 12),
+                    MainTextField(
+                      hint: 'Example: johndoe@gmail.com',
+                      controller: _loginController,
+                      isPassword: false,
+                    ),
+                    const SizedBox(height: 32),
+                    const BaseText(title: 'Password'),
+                    const SizedBox(height: 12),
+                    MainTextField(
+                      hint: '******',
+                      controller: _passwordController,
+                      isPassword: true,
+                    ),
+                    const SizedBox(height: 8),
+                    TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontSize: 18,
+                              color: AppColors.darkPurple),
+                        )),
+                    const SizedBox(height: 32),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 32),
+                          child: ContinueButton(
+                            onPressed: state is AuthLoadingState
+                                ? null
+                                : () {
+                                    context.read<AuthBloc>().add(LoginEvent(
+                                          email: _loginController.text,
+                                          password: _passwordController.text,
+                                        ));
+                                  },
+                            text: state is AuthLoadingState ? null : 'Login',
+                            isLoading: state is AuthLoadingState,
+                          ),
                         ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 54, horizontal: 16),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
+                        const SizedBox(height: 24),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const TitleText(title: 'Authorization'),
-                            const SizedBox(height: 32),
-                            MainTextField(
-                              hint: 'Login',
-                              controller: _loginController,
-                              isPassword: false,
+                            const Text(
+                              'Don’t have any account?',
+                              style: TextStyle(
+                                  fontSize: 18, color: AppColors.darkPurple),
                             ),
-                            const SizedBox(height: 24),
-                            MainTextField(
-                              hint: 'Password',
-                              controller: _passwordController,
-                              isPassword: true,
-                            ),
-                            const SizedBox(height: 8),
-                            Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      'Do not have an account?',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        context
-                                            .read<AuthBloc>()
-                                            .add(ShowSignUpScreenEvent());
-                                      },
-                                      child: const Text(
-                                        'Create account',
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 16),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 32),
-                                  child: ContinueButton(
-                                    onPressed: state is AuthLoadingState
-                                        ? null
-                                        : () {
-                                            context
-                                                .read<AuthBloc>()
-                                                .add(LoginEvent(
-                                                  email: _loginController.text,
-                                                  password:
-                                                      _passwordController.text,
-                                                ));
-                                          },
-                                    text: state is AuthLoadingState
-                                        ? null
-                                        : 'Continue',
-                                    isLoading: state is AuthLoadingState,
-                                  ),
-                                ),
-                              ],
+                            TextButton(
+                              onPressed: () {
+                                context
+                                    .read<AuthBloc>()
+                                    .add(ShowSignUpScreenEvent());
+                              },
+                              child: const Text(
+                                'Register here',
+                                style: TextStyle(
+                                    fontSize: 18, color: AppColors.darkPurple),
+                              ),
                             ),
                           ],
                         ),
-                      ),
+                      ],
                     ),
-                  ),
+                  ],
                 ),
               ),
             );
