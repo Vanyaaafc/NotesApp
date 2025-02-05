@@ -22,10 +22,11 @@ class MainTextField extends StatelessWidget {
       obscureText: isPassword,
       onChanged: onChanged,
       decoration: InputDecoration(
-        hintStyle: const TextStyle(fontSize: 18, color: Colors.black54),
+
+        hintStyle: const TextStyle(fontSize: 18, color: Colors.black26, fontWeight: FontWeight.w300),
         hintText: hint,
         border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
       ),
     );
