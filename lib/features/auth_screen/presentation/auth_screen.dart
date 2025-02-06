@@ -1,7 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:notes_app/features/main_screen/presentation/main_screen.dart';
 import 'package:notes_app/features/sign_up/presentation/sign_up_screen.dart';
+import 'package:notes_app/routing/app_router.gr.dart';
 import 'package:notes_app/shared/styles/colors.dart';
 import 'package:notes_app/shared/widgets/buttons/continue_button.dart';
 import 'package:notes_app/shared/widgets/text/base_text.dart';
@@ -10,6 +11,7 @@ import 'package:notes_app/shared/widgets/text_fields/main_text_field.dart';
 
 import '../domain/auth_bloc.dart';
 
+@RoutePage()
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
@@ -34,11 +36,7 @@ class _AuthScreenState extends State<AuthScreen> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoadedState) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (BuildContext context) {
-                return const MainScreen();
-              }),
-            );
+                AutoRouter.of(context).replaceAll([const MainRoute()]);
           }
           if (state is AuthErrorState) {
             ScaffoldMessenger.of(context)

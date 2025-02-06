@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/features/auth_screen/domain/auth_bloc.dart';
-import 'package:notes_app/features/auth_screen/presentation/auth_screen.dart';
+import 'package:notes_app/routing/app_router.gr.dart';
 
+@RoutePage()
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
@@ -12,11 +14,7 @@ class MainScreen extends StatelessWidget {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLogoutState) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (BuildContext context) => const AuthScreen(),
-              ),
-            );
+            AutoRouter.of(context).replaceAll([const AuthRoute()]);
           }
         },
         child: Center(

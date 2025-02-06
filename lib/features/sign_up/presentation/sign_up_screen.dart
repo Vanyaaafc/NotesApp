@@ -1,9 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/features/auth_screen/domain/auth_bloc.dart';
 import 'package:notes_app/features/auth_screen/presentation/auth_screen.dart';
-import 'package:notes_app/features/main_screen/presentation/main_screen.dart';
 import 'package:notes_app/features/sign_up/domain/sign_up_bloc.dart';
+import 'package:notes_app/routing/app_router.gr.dart';
 import 'package:notes_app/shared/styles/colors.dart';
 import 'package:notes_app/shared/widgets/buttons/continue_button.dart';
 import 'package:notes_app/shared/widgets/text/base_text.dart';
@@ -41,11 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
         if (state is SignUpLoadedState) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (BuildContext context) {
-              return const MainScreen();
-            }),
-          );
+          AutoRouter.of(context).replaceAll([const MainRoute()]);
         }
         if (state is SignUpErrorState) {
           ScaffoldMessenger.of(context)
