@@ -6,11 +6,14 @@ import 'package:notes_app/routing/routes.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(page: AppRoute.page, path: '/', children: [
-      AutoRoute(page: AuthRoute.page, path: Routes.auth, initial: true),
-      
-      ///to bottomBar
-      AutoRoute(page: MainRoute.page, path: Routes.main)
-    ])
-  ];
+        AutoRoute(page: AppRoute.page, path: '/', children: [
+          AutoRoute(page: AuthRoute.page, path: Routes.auth, initial: true),
+          AutoRoute(page: BottomBar.page, path: Routes.bottomBar, children: [
+            AutoRoute(page: HomeRoute.page, path: Routes.home),
+            AutoRoute(page: FinishedRoute.page, path: Routes.finished),
+            AutoRoute(page: SearchRoute.page, path: Routes.search),
+            AutoRoute(page: SettingsRoute.page, path: Routes.settings)
+          ])
+        ])
+      ];
 }

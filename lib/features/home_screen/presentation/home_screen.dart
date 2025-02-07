@@ -5,8 +5,8 @@ import 'package:notes_app/features/auth_screen/domain/auth_bloc.dart';
 import 'package:notes_app/routing/app_router.gr.dart';
 
 @RoutePage()
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class MainScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('aloha'),
+              const Text('Home Screen'),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
