@@ -36,7 +36,7 @@ class _AuthScreenState extends State<AuthScreen> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoadedState) {
-                AutoRouter.of(context).replaceAll([const MainRoute()]);
+                AutoRouter.of(context).replaceAll([const HomeRoute()]);
           }
           if (state is AuthErrorState) {
             ScaffoldMessenger.of(context)

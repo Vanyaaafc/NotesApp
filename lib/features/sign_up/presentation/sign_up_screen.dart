@@ -42,7 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
         if (state is SignUpLoadedState) {
-          AutoRouter.of(context).replaceAll([const MainRoute()]);
+          AutoRouter.of(context).replaceAll([const HomeRoute()]);
         }
         if (state is SignUpErrorState) {
           ScaffoldMessenger.of(context)
